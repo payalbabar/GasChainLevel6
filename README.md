@@ -258,6 +258,13 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
 
 
+## 🖼️ Logo & Branding
+
+GasChain uses a custom SVG logo integrated into the UI for consistent branding.
+
+<img width="644" height="639" alt="image" src="https://github.com/user-attachments/assets/5bda7d32-8ef3-4ee5-b1b7-f3ede6f25669" />
+
+
 
 
 
