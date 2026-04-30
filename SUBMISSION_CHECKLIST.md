@@ -29,8 +29,7 @@ This checklist confirms that the **GASCHAIN — Decentralized LPG Ecosystem** pr
 ## 4. Dev & Deployment
 - [x] **Minimum 10+ Meaningful Commits**: Structured development history
 - [x] **Live Deployment**: Application hosted on Vercel  
-  👉 https://gas-chain-level6.vercel.app/
-
+  👉 https://level6-2mgt.vercel.app/
 ---
 
 ## 5. Submission Requirements
