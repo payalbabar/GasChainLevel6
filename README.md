@@ -2,15 +2,34 @@
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-o3nk.vercel.app/)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-2mgt.vercel.app/)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
 [![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ---
 
 ## 🎥 Demo Video
-https://youtu.be/TrbpXrAEVR8?si=FiUOj2q2blXKmvwl
+https://youtu.be/zZf87KZLVSM?si=lINzm4Cm_OKGjbYp
 ---
+
+
+## 🛡️ Mock Data Removal
+
+All mock, static, and hardcoded data has been removed from this project.
+
+* No seeded data or fake entries
+* No hardcoded metrics or governance data
+* No static identities (e.g., "Admin", "Demo User")
+
+All data is now **real and dynamic**, derived from:
+
+* `Booking` (user interactions)
+* `SupplyChainBlock` (blockchain events)
+
+The app starts in an empty state and updates only after real user actions.
+**Live Demo**: [https://level6-2mgt.vercel.app/](https://level6-2mgt.vercel.app/)
+
+**Status:** ✅ 100% Dynamic | No Mock Data
 
 
 ## 🌟 Overview
@@ -227,34 +246,36 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://level6-o3nk.vercel.app/](https://level6-o3nk.vercel.app/)
-- **Demo Video**: [https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J](https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J)
+- **Live Demo**: [https://level6-2mgt.vercel.app/](https://level6-2mgt.vercel.app/)
+- **Demo Video**: [https://youtu.be/zZf87KZLVSM?si=lINzm4Cm_OKGjbYp](https://youtu.be/zZf87KZLVSM?si=lINzm4Cm_OKGjbYp)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
-- **Dashboard**: [https://level6-o3nk.vercel.app/dashboard](https://level6-o3nk.vercel.app/dashboard) (Requires Login)
-- **Booking History**: [https://level6-o3nk.vercel.app/bookings](https://level6-o3nk.vercel.app/bookings) (Requires Login)
-- **Supply Chain**: [https://level6-o3nk.vercel.app/supply-chain](https://level6-o3nk.vercel.app/supply-chain) (Requires Login)
-- **Subsidies**: [https://level6-o3nk.vercel.app/subsidies](https://level6-o3nk.vercel.app/subsidies) (Requires Login)
-- **Ledger Explorer**: [https://level6-o3nk.vercel.app/ledger](https://level6-o3nk.vercel.app/ledger) (Requires Login)
+- **Dashboard**: [https://level6-2mgt.vercel.app/dashboard](https://level6-2mgt.vercel.app/dashboard) (Requires Login)
+- **Booking History**: [https://level6-2mgt.vercel.app/bookings](https://level6-2mgt.vercel.app/bookings) (Requires Login)
+- **Supply Chain**: [https://level6-2mgt.vercel.app/supply-chain](https://level6-2mgt.vercel.app/supply-chain) (Requires Login)
+- **Subsidies**: [https://level6-2mgt.vercel.app/subsidies](https://level6-2mgt.vercel.app/subsidies) (Requires Login)
+- **Ledger Explorer**: [https://level6-2mgt.vercel.app/ledger](https://level6-2mgt.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
-
+---
 
 ## 📸 Screenshots
-
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/0a55ffda-56a3-4151-93f1-339559100197" />
 <img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/c8ef55d2-a6b7-4be5-a4ef-b94f820dba44" />
 <img width="1899" height="859" alt="image" src="https://github.com/user-attachments/assets/ddf81700-91d9-4637-bbc7-7150f9cbd30f" />
 <img width="1920" height="870" alt="image" src="https://github.com/user-attachments/assets/aaa0bd78-ad96-495c-a0d7-1dec48a4af49" />
 <img width="1920" height="865" alt="image" src="https://github.com/user-attachments/assets/22f3f8af-3e7d-4daa-bdad-406f92849f6f" />
 <img width="1920" height="873" alt="image" src="https://github.com/user-attachments/assets/7ff7ffa6-58e3-48b7-8317-2b759848b75e" />
-<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/b70efdd1-aa42-46a9-9c96-878a7ec4392f" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c92a4ed-64c9-4e4c-8a6c-3141b79b3f42" />
+
 <img width="1920" height="871" alt="image" src="https://github.com/user-attachments/assets/9ec01fff-7f1f-4b46-8043-f09a54b6dbbd" />
 <img width="1920" height="863" alt="image" src="https://github.com/user-attachments/assets/8e3ed197-bcc5-4af1-9758-ac3f54f3c65d" />
 <img width="1920" height="873" alt="image" src="https://github.com/user-attachments/assets/9e05a22f-2b54-464c-b02e-4097e993347c" />
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/64bdf94f-5f4f-46ff-bcf3-e6a23cd2760a" />
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/00bb063e-4acf-4199-8d53-36494e4ad183" />
 <img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/7f01e25a-caac-438e-a26f-7f623556e37b" />
+<img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
+
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
 
 
