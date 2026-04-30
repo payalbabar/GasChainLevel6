@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import AppHeader from '../components/dashboard/AppHeader';
+
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Cpu, Wifi, Zap, Clock, Activity, Terminal, X, ChevronRight, Loader2 } from 'lucide-react';
 import { cn } from "@/lib/utils";
@@ -8,17 +8,12 @@ import { base44 } from '@/api/base44Client';
 import moment from 'moment';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const latencyData = [];
-const throughputData = [];
 
-const stats = [];
-
-const nodes = [];
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload?.length) {
     return (
-      <div className="px-3 py-2 rounded-md bg-popover border border-border text-xs text-popover-foreground shadow-sm">
+      <div className="px-3 py-2 rounded-md bg-popover border border-border text-xs text-popover-foreground">
         {payload[0].value} units
       </div>
     );
@@ -137,7 +132,7 @@ export default function MetricsDashboard() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <AppHeader breadcrumb="Network Stats" />
+
       <div className="p-8 space-y-8 max-w-7xl mx-auto pb-20 animate-in fade-in duration-500">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-6">
@@ -158,7 +153,7 @@ export default function MetricsDashboard() {
             <p className="text-sm text-muted-foreground animate-pulse">Synchronizing with node cluster...</p>
           </div>
         ) : !metrics ? (
-          <div className="text-center py-24 border-2 border-dashed border-border rounded-2xl bg-card/30">
+          <div className="text-center py-24 border-2 border-dashed border-border rounded-lg bg-card/30">
             <Activity className="h-12 w-12 mx-auto text-muted-foreground/20 mb-4" />
             <h3 className="text-lg font-medium text-muted-foreground">Protocol Idle</h3>
             <p className="text-sm text-muted-foreground/60 max-w-xs mx-auto">
@@ -173,8 +168,8 @@ export default function MetricsDashboard() {
                   key={s.id}
                   onClick={() => setActiveStat(activeStat === s.id ? null : s.id)}
                   className={cn(
-                      "p-6 rounded-xl border transition-all cursor-pointer group relative overflow-hidden",
-                      activeStat === s.id ? "bg-muted border-primary ring-1 ring-primary/30" : "bg-card border-border hover:border-primary/50 hover:-translate-y-0.5"
+                      "p-6 rounded-lg border transition-colors cursor-pointer group relative overflow-hidden",
+                      activeStat === s.id ? "bg-muted border-primary" : "bg-card border-border hover:border-primary/50"
                   )}
                 >
                   <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center mb-4 transition-colors", s.color)}>
@@ -190,14 +185,8 @@ export default function MetricsDashboard() {
               ))}
             </div>
 
-            <AnimatePresence>
               {activeStat && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="rounded-xl border border-border bg-card p-6 shadow-xl relative overflow-hidden"
-                >
+                <div className="rounded-lg border border-border bg-card p-6 relative overflow-hidden">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
@@ -216,7 +205,7 @@ export default function MetricsDashboard() {
                         headers={['User Signature', 'Activity', 'Timestamp']}
                         data={metrics.dauDetails.map(d => [
                           <span className="font-mono text-xs">{d.id}</span>,
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-muted border border-border">{d.label}</span>,
+                          <span className="text-xs px-2 py-0.5 rounded-md bg-muted border border-border">{d.label}</span>,
                           <span className="text-xs text-muted-foreground">{moment(d.time).fromNow()}</span>
                         ])}
                       />
@@ -240,7 +229,7 @@ export default function MetricsDashboard() {
                              headers={['Identity', 'Status']}
                              data={metrics.retentionDetails.new.map(u => [
                                <span className="font-mono text-xs">{u.id}</span>,
-                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border uppercase">First Interaction</span>
+                               <span className="text-[10px] px-2 py-0.5 rounded-md bg-muted border border-border uppercase">First Interaction</span>
                              ])}
                           />
                         </div>
@@ -253,7 +242,7 @@ export default function MetricsDashboard() {
                         data={metrics.transactionDetails.map(t => [
                           <span className="font-mono text-xs truncate max-w-[120px] block">{t.id}</span>,
                           <span className="text-xs font-medium">{t.type}</span>,
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase font-bold">{t.status?.replace(/_/g, ' ')}</span>,
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-primary/10 text-primary uppercase font-bold">{t.status?.replace(/_/g, ' ')}</span>,
                           <span className="text-xs text-muted-foreground">{moment(t.time).format('MMM DD, HH:mm')}</span>
                         ])}
                       />
@@ -270,9 +259,8 @@ export default function MetricsDashboard() {
                       />
                     )}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
 
             <div className="grid lg:grid-cols-2 gap-6">
               <ChartPanel title="Daily Active Users" subtitle="Unique interaction signatures per day" badge="User Flow">
@@ -315,7 +303,7 @@ function DataTable({ headers, data }) {
       <thead>
         <tr className="border-b border-border/40">
           {headers.map(h => (
-            <th key={h} className="text-[10px] font-black uppercase tracking-widest text-muted-foreground py-3 px-2">{h}</th>
+            <th key={h} className="text-[10px] font-black uppercase tracking-widest text-muted-foreground py-2.5 px-2">{h}</th>
           ))}
         </tr>
       </thead>
@@ -325,7 +313,7 @@ function DataTable({ headers, data }) {
         ) : data.map((row, i) => (
           <tr key={i} className="hover:bg-muted/10 transition-colors">
             {row.map((cell, j) => (
-              <td key={j} className="py-3 px-2 whitespace-nowrap">{cell}</td>
+              <td key={j} className="py-2.5 px-2 whitespace-nowrap">{cell}</td>
             ))}
           </tr>
         ))}
@@ -336,7 +324,7 @@ function DataTable({ headers, data }) {
 
 function ChartPanel({ title, subtitle, badge, children }) {
     return (
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h3 className="text-base font-semibold text-foreground">{title}</h3>

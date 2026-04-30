@@ -92,19 +92,19 @@ export default function BookingDetail({ booking, onBack }) {
       </div>
 
       {/* Main Order Card */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">        
+      <div className="rounded-lg border border-border bg-card">        
         <div className="p-6">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-border">
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        <div className="h-10 w-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
                             <Terminal className="h-5 w-5" />
                         </div>
                         <div>
                             <p className="text-xs text-muted-foreground mb-0.5">Contract ID</p>
                             <div className="flex items-center gap-2">
                                 <h1 className="text-xl font-semibold font-mono">{booking.booking_id}</h1>
-                                <span className={cn("text-[10px] px-2 py-0.5 rounded-full font-medium uppercase",
+                                <span className={cn("text-[10px] px-2 py-0.5 rounded-md font-medium uppercase",
                                     booking.status === 'delivered' ? "bg-success/10 text-success" : "bg-primary/10 text-primary"
                                 )}>
                                     {booking.status?.replace("_", " ")}
@@ -128,7 +128,7 @@ export default function BookingDetail({ booking, onBack }) {
 
                 <div className="text-left md:text-right">
                     <p className="text-xs text-muted-foreground mb-1">Total Amount</p>
-                    <p className="text-3xl font-semibold">₹{(booking.final_amount || 0).toLocaleString()}</p>
+                    <p className="text-3xl font-semibold">KES {(booking.final_amount || 0).toLocaleString()}</p>
                     {booking.subsidy_applied > 0 && (
                         <div className="inline-flex items-center gap-1 mt-1 text-xs text-success">
                             <CheckCircle2 className="h-3 w-3" /> Subsidy Applied
@@ -147,7 +147,7 @@ export default function BookingDetail({ booking, onBack }) {
                 {STATUS_FLOW.map((status, i) => (
                     <div key={status} className="flex-1 space-y-2">
                         <div className={cn(
-                            "h-1.5 w-full rounded-full transition-all",
+                            "h-1.5 w-full rounded-md transition-colors duration-150",
                             i <= currentIdx ? "bg-primary" : "bg-muted"
                         )} />
                         <span className={cn(
@@ -165,7 +165,7 @@ export default function BookingDetail({ booking, onBack }) {
 
       {/* Status Update */}
       {booking.status !== "delivered" && booking.status !== "cancelled" && (
-        <div className="p-6 rounded-xl border border-border bg-card shadow-sm">
+        <div className="p-6 rounded-lg border border-border bg-card">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
                 <Database className="h-5 w-5 text-primary" />
@@ -198,10 +198,10 @@ export default function BookingDetail({ booking, onBack }) {
       )}
 
       {/* Audit Trail */}
-      <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+      <div className="rounded-lg border border-border bg-card overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-success/10 text-success flex items-center justify-center">
+            <div className="h-8 w-8 rounded-md bg-success/10 text-success flex items-center justify-center">
                 <Link2 className="h-4 w-4" />
             </div>
             <div>
@@ -229,7 +229,7 @@ export default function BookingDetail({ booking, onBack }) {
                     <div key={block.id} className="relative flex gap-4">
                     {/* Dot */}
                     <div className={cn(
-                        "absolute left-[-24px] top-1 h-5 w-5 rounded-full flex items-center justify-center z-10 border-2",
+                        "absolute left-[-24px] top-1 h-5 w-5 rounded-md flex items-center justify-center z-10 border-2",
                         idx === 0 ? "bg-primary border-primary text-primary-foreground" : "bg-card border-border text-muted-foreground"
                     )}>
                         <span className="text-[8px] font-bold">{block.block_index}</span>
@@ -241,7 +241,7 @@ export default function BookingDetail({ booking, onBack }) {
                                 <span className="text-sm font-medium">
                                     {EVENT_LABELS[block.event_type] || block.event_type?.replace(/_/g, " ")}
                                 </span>
-                                {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">Latest</span>}
+                                {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-primary/10 text-primary font-medium">Latest</span>}
                             </div>
                             <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />

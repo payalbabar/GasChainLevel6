@@ -111,11 +111,11 @@ export default function BlockchainSimulator() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <div className={`flex items-center gap-4 p-3 rounded-[24px] border transition-all duration-700 backdrop-blur-3xl 
-        ${isActive ? 'bg-black/80 border-primary/40 shadow-[0_0_30px_rgba(249,115,22,0.2)]' : 'bg-black/60 border-white/10 shadow-2xl'}`}>
+      <div className={`flex items-center gap-4 p-3 rounded-lg border transition-colors duration-700 backdrop-blur-3xl 
+        ${isActive ? 'bg-black/80 border-primary/40' : 'bg-black/60 border-white/10'}`}>
         
-        <div className={`h-12 w-12 rounded-xl flex items-center justify-center border transition-all duration-500
-            ${isActive ? 'bg-primary border-primary/20 text-white glow' : 'bg-white/5 border-white/5 text-slate-500'}
+        <div className={`h-12 w-12 rounded-lg flex items-center justify-center border transition-colors duration-500
+            ${isActive ? 'bg-primary border-primary/20 text-white' : 'bg-white/5 border-white/5 text-slate-500'}
         `}>
           <Terminal className="h-5 w-5" />
         </div>
@@ -123,7 +123,7 @@ export default function BlockchainSimulator() {
         <div className="pr-4 border-r border-white/5">
           <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-0.5">Automated Indexer</p>
           <div className="flex items-center gap-2">
-            <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse glow' : 'bg-slate-600'}`} />
+            <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600'}`} />
             <p className="text-xs font-bold text-white font-mono tracking-tight max-w-[150px] truncate">
                 {isActive ? (lastEvent || 'LISTENING TO NETWORK...') : 'NODE IDLE'}
             </p>
@@ -132,10 +132,10 @@ export default function BlockchainSimulator() {
 
         <button 
           onClick={() => setIsActive(!isActive)}
-          className={`px-4 py-2.5 rounded-xl font-black tracking-widest text-[9px] uppercase transition-all duration-300
+          className={`px-4 py-2.5 rounded-lg font-black tracking-widest text-[9px] uppercase transition-colors duration-300
             ${isActive 
                 ? 'bg-transparent text-slate-400 hover:text-white hover:bg-white/5' 
-                : 'bg-primary text-white hover:bg-primary/90 hover:scale-105 shadow-xl'}
+                : 'bg-primary text-white hover:bg-primary/90'}
           `}
         >
           {isActive ? 'HALT DAEMON' : 'SPIN UP NODE'}

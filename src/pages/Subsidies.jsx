@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import AppHeader from '../components/dashboard/AppHeader';
+
 import { Shield, Vote, CheckCircle, Clock, XCircle, Zap, Cpu, ChevronDown, AlertCircle, FileText, Radio, Loader2, Plus, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
@@ -215,13 +215,13 @@ export default function Subsidies() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      <AppHeader breadcrumb="Governance" />
+
       
       <div className="p-8 max-w-7xl mx-auto space-y-8 pb-20 relative z-10">
         
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-border pb-6">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-[10px] font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/25 text-primary text-[10px] font-bold uppercase tracking-widest">
               <Shield className="h-3.5 w-3.5" /> Protocol Authority Node
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">
@@ -238,14 +238,14 @@ export default function Subsidies() {
                         onClick={() => setActiveTab(tab)}
                         className={cn(
                             "px-4 py-2 rounded-md text-sm font-medium capitalize transition-colors",
-                            activeTab === tab ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                            activeTab === tab ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                         )}
                     >
                         {tab}
                     </button>
                 ))}
             </div>
-            <Button onClick={() => setShowCreate(true)} className="gap-2 shadow-lg shadow-primary/20">
+            <Button onClick={() => setShowCreate(true)} className="gap-2">
                 <Plus className="h-4 w-4" /> Create GIP
             </Button>
           </div>
@@ -260,8 +260,8 @@ export default function Subsidies() {
 
         <AnimatePresence mode="wait">
             {activeMetric && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                    <div className="p-6 rounded-2xl bg-card border border-primary/20 shadow-glow-sm mb-8">
+                <div className="overflow-hidden">
+                    <div className="p-6 rounded-lg bg-card border border-primary/20 mb-8">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-bold flex items-center gap-2">
                                 {activeMetric === 'gips' && <><FileText className="h-5 w-5 text-primary" /> Proposal Ledger</>}
@@ -306,9 +306,9 @@ export default function Subsidies() {
                                         <div className="text-center py-10 text-muted-foreground">No votes cast on current ledger epoch.</div>
                                     ) : (
                                         governance.voteEvents.map((v, i) => (
-                                            <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border/50">
+                                            <div key={i} className="flex items-center justify-between p-3 rounded-md bg-muted/50 border border-border/50">
                                                 <div className="flex items-center gap-3">
-                                                    <div className={cn("h-8 w-8 rounded flex items-center justify-center text-[10px] font-bold", 
+                                                    <div className={cn("h-8 w-8 rounded-md flex items-center justify-center text-[10px] font-bold", 
                                                         v.choice === 'yes' ? "bg-emerald-500/20 text-emerald-500" : 
                                                         v.choice === 'no' ? "bg-rose-500/20 text-rose-500" : "bg-muted text-muted-foreground")}>
                                                         {v.choice.toUpperCase()}
@@ -331,10 +331,10 @@ export default function Subsidies() {
                                         <div className="text-center py-10 text-muted-foreground">No proposals have reached consensus yet. (Requires 66% supermajority)</div>
                                     ) : (
                                         governance.passedProposals.map(p => (
-                                            <div key={p.id} className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5">
+                                            <div key={p.id} className="p-4 rounded-lg border border-emerald-500/30 bg-emerald-500/5">
                                                 <div className="flex justify-between items-start mb-2">
                                                     <h4 className="font-bold text-emerald-500">{p.title}</h4>
-                                                    <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded">PASSED</span>
+                                                    <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded-md">PASSED</span>
                                                 </div>
                                                 <p className="text-xs text-muted-foreground mb-3">{p.desc}</p>
                                                 <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -351,25 +351,25 @@ export default function Subsidies() {
                             {activeMetric === 'power' && (
                                 <div className="space-y-6">
                                     <div className="grid grid-cols-3 gap-4">
-                                        <div className="p-4 rounded-xl bg-muted/50 border border-border">
+                                        <div className="p-4 rounded-lg bg-muted/50 border border-border">
                                             <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Identity</p>
                                             <p className="text-xs font-mono truncate">{governance.nodeInfo.identity}</p>
                                         </div>
-                                        <div className="p-4 rounded-xl bg-muted/50 border border-border text-center">
+                                        <div className="p-4 rounded-lg bg-muted/50 border border-border text-center">
                                             <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Verified Blocks</p>
                                             <p className="text-xl font-bold text-primary">{governance.nodeInfo.verifiedCount}</p>
                                         </div>
-                                        <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-center">
+                                        <div className="p-4 rounded-lg bg-primary/10 border border-primary/20 text-center">
                                             <p className="text-[10px] font-bold text-primary uppercase mb-1">Weighting</p>
                                             <p className="text-xl font-bold text-primary">10x</p>
                                         </div>
                                     </div>
-                                    <div className="p-6 rounded-xl border border-dashed border-primary/30 flex items-center justify-between">
+                                    <div className="p-6 rounded-lg border border-dashed border-primary/30 flex items-center justify-between">
                                         <div>
                                             <p className="text-sm font-bold text-foreground">Protocol Authority Power</p>
                                             <p className="text-xs text-muted-foreground mt-1">Calculated as (Verified Blocks × 10)</p>
                                         </div>
-                                        <div className="text-4xl font-black text-primary drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                        <div className="text-4xl font-black text-primary">
                                             {governance.nodeInfo.power}
                                             <span className="text-xs font-bold ml-1 text-muted-foreground uppercase tracking-tighter">VP</span>
                                         </div>
@@ -378,7 +378,7 @@ export default function Subsidies() {
                             )}
                         </div>
                     </div>
-                </motion.div>
+                </div>
             )}
         </AnimatePresence>
 
@@ -390,7 +390,7 @@ export default function Subsidies() {
                         <p className="text-sm text-muted-foreground">Syncing consensus state...</p>
                     </div>
                 ) : filteredProposals.length === 0 ? (
-                    <div className="text-center py-20 border-2 border-dashed border-border rounded-2xl bg-card/30">
+                    <div className="text-center py-20 border-2 border-dashed border-border rounded-lg bg-card/30">
                         <Vote className="h-12 w-12 mx-auto text-muted-foreground/20 mb-4" />
                         <h3 className="text-lg font-medium text-muted-foreground">Governance not initialized</h3>
                         <p className="text-sm text-muted-foreground/60 mb-6">No proposals found on the current ledger epoch.</p>
@@ -405,13 +405,13 @@ export default function Subsidies() {
                         const hasVoted = governance.userVotes[p.id];
 
                         return (
-                            <div key={p.id} className={cn("rounded-xl border transition-all overflow-hidden", hasVoted ? "bg-card border-emerald-500/20 shadow-sm" : "bg-card border-border hover:border-primary/30")}>
+                            <div key={p.id} className={cn("rounded-lg border transition-colors duration-150 overflow-hidden", hasVoted ? "bg-card border-emerald-500/20" : "bg-card border-border hover:border-primary/30")}>
                                 <div onClick={() => setExpandedId(isExpanded ? null : p.id)} className="p-6 cursor-pointer">
                                     <div className="flex items-start justify-between gap-4">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <span className="text-[10px] font-mono text-muted-foreground bg-muted px-1.5 py-0.5 rounded">{p.id}</span>
-                                                <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border", cfg.style)}>
+                                                <span className="text-[10px] font-mono text-muted-foreground bg-muted px-1.5 py-0.5 rounded-md">{p.id}</span>
+                                                <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border", cfg.style)}>
                                                     <StatusIcon className="h-3 w-3" /> {cfg.label}
                                                 </span>
                                             </div>
@@ -430,16 +430,15 @@ export default function Subsidies() {
                                     </div>
                                     {total > 0 && (
                                         <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-border/50">
-                                            <VoteBar label="Yes" value={p.votes.yes} total={total} color="bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
-                                            <VoteBar label="No" value={p.votes.no} total={total} color="bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.3)]" />
+                                            <VoteBar label="Yes" value={p.votes.yes} total={total} color="bg-emerald-500" />
+                                            <VoteBar label="No" value={p.votes.no} total={total} color="bg-rose-500" />
                                             <VoteBar label="Abstain" value={p.votes.abstain} total={total} color="bg-muted-foreground" />
                                         </div>
                                     )}
                                 </div>
 
-                                <AnimatePresence>
                                     {isExpanded && (
-                                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="border-t border-border bg-muted/20">
+                                        <div className="border-t border-border bg-muted/20">
                                             <div className="p-6 space-y-6">
                                                 <div className="grid md:grid-cols-3 gap-4">
                                                     <DetailBox title="Authority Node" value={p.proposer} />
@@ -447,31 +446,30 @@ export default function Subsidies() {
                                                     <DetailBox title="Merkle Proof" value={p.techSpec} isCode />
                                                 </div>
                                                 {p.status === 'active' && !hasVoted ? (
-                                                    <div className="p-4 rounded-xl border border-primary/20 bg-primary/5">
+                                                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
                                                         <p className="text-xs font-bold uppercase tracking-widest text-primary text-center mb-4">Cryptographic Vote Required</p>
                                                         <div className="flex gap-3">
                                                             {['yes', 'no', 'abstain'].map(v => (
-                                                                <Button key={v} disabled={isBroadcasting} onClick={(e) => { e.stopPropagation(); handleVote(p.id, v); }} variant="outline" className={cn("flex-1 capitalize font-bold", v === 'yes' && 'hover:bg-emerald-500 hover:text-white border-emerald-500/30', v === 'no' && 'hover:bg-rose-500 hover:text-white border-rose-500/30')}>
+                                                                <Button key={v} disabled={isBroadcasting} onClick={(e) => { e.stopPropagation(); handleVote(p.id, v); }} variant="outline" className={cn("flex-1 capitalize font-bold rounded-md", v === 'yes' && 'hover:bg-emerald-500 hover:text-white border-emerald-500/30', v === 'no' && 'hover:bg-rose-500 hover:text-white border-rose-500/30')}>
                                                                     {isBroadcasting ? <Loader2 className="h-4 w-4 animate-spin" /> : v}
                                                                 </Button>
                                                             ))}
                                                         </div>
                                                     </div>
-                                                ) : hasVoted ? (
-                                                    <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center gap-3">
+                                                    ) : hasVoted ? (
+                                                    <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center gap-3">
                                                         <CheckCircle className="h-5 w-5 text-emerald-500" />
                                                         <p className="text-sm font-bold text-emerald-500">Vote Recorded: {hasVoted.toUpperCase()}</p>
                                                     </div>
                                                 ) : (
-                                                    <div className="flex items-center justify-center gap-2 text-muted-foreground py-4 border border-dashed border-border rounded-xl">
+                                                    <div className="flex items-center justify-center gap-2 text-muted-foreground py-4 border border-dashed border-border rounded-lg">
                                                         <Clock className="h-4 w-4" />
                                                         <p className="text-sm font-medium">Consensus phase concluded.</p>
                                                     </div>
                                                 )}
                                             </div>
-                                        </motion.div>
+                                        </div>
                                     )}
-                                </AnimatePresence>
                             </div>
                         );
                     })
@@ -479,9 +477,9 @@ export default function Subsidies() {
             </div>
 
             <div className="lg:col-span-4 space-y-6">
-                <div className="p-6 rounded-2xl bg-card border border-border shadow-sm">
+                <div className="p-6 rounded-lg bg-card border border-border">
                     <div className="flex items-center gap-3 mb-6 border-b border-border pb-4">
-                        <Radio className="h-4 w-4 text-primary animate-pulse" />
+                        <Radio className="h-4 w-4 text-primary" />
                         <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Consensus Stream</h4>
                     </div>
                     <div className="space-y-4">
@@ -502,7 +500,7 @@ export default function Subsidies() {
                     </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
                     <div className="flex items-center gap-2 mb-2">
                         <AlertCircle className="h-4 w-4 text-primary" />
                         <span className="text-xs font-bold text-primary uppercase">Governance Note</span>
@@ -519,8 +517,8 @@ export default function Subsidies() {
       <AnimatePresence>
         {showCreate && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowCreate(false)} className="absolute inset-0 bg-background/80 backdrop-blur-md" />
-                <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl overflow-hidden">
+                <div onClick={() => setShowCreate(false)} className="absolute inset-0 bg-background/80 backdrop-blur-md" />
+                <div className="relative w-full max-w-lg bg-card border border-border rounded-lg overflow-hidden">
                     <div className="p-6 border-b border-border flex items-center justify-between">
                         <h2 className="text-xl font-bold flex items-center gap-2"><Plus className="h-5 w-5 text-primary" /> Create GIP</h2>
                         <Button variant="ghost" size="icon" onClick={() => setShowCreate(false)}><X className="h-4 w-4" /></Button>
@@ -542,22 +540,20 @@ export default function Subsidies() {
                             </Button>
                         </div>
                     </form>
-                </motion.div>
+                </div>
             </div>
         )}
-      </AnimatePresence>
 
-      <AnimatePresence>
           {isBroadcasting && !showCreate && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[110] bg-background/60 backdrop-blur-sm flex flex-col items-center justify-center space-y-4">
-                  <div className="h-20 w-20 rounded-2xl bg-card border border-primary/20 flex items-center justify-center shadow-2xl">
+              <div className="fixed inset-0 z-[110] bg-background/60 backdrop-blur-sm flex flex-col items-center justify-center space-y-4">
+                  <div className="h-20 w-20 rounded-lg bg-card border border-primary/20 flex items-center justify-center">
                     <Loader2 className="h-8 w-8 text-primary animate-spin" />
                   </div>
                   <div className="text-center">
                     <p className="text-lg font-bold">Consensus Broadcasting</p>
                     <p className="text-sm text-muted-foreground">Signatures being verified by network nodes...</p>
                   </div>
-              </motion.div>
+              </div>
           )}
       </AnimatePresence>
     </div>
@@ -566,7 +562,7 @@ export default function Subsidies() {
 
 function MetricCard({ label, value, icon: Icon, active, onClick }) {
   return (
-    <div onClick={onClick} className={cn("p-6 rounded-xl bg-card border transition-all duration-300 cursor-pointer relative group", active ? "border-primary/50 bg-primary/5 shadow-glow-sm" : "border-border hover:border-primary/30 hover:-translate-y-1")}>
+    <div onClick={onClick} className={cn("p-6 rounded-lg bg-card border transition-colors duration-150 cursor-pointer relative group", active ? "border-primary/50 bg-primary/5" : "border-border hover:border-primary/30")}>
       <div className="flex justify-between items-start">
         <div>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">{label}</p>
@@ -588,8 +584,8 @@ function VoteBar({ label, value, total, color }) {
                 <span className="text-[10px] font-bold text-muted-foreground uppercase">{label}</span>
                 <span className="text-[10px] font-bold font-mono">{pct}%</span>
             </div>
-            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className={cn("h-full rounded-full", color)} />
+            <div className="h-1.5 rounded-md bg-muted overflow-hidden">
+                <div className={cn("h-full rounded-md transition-all duration-500", color)} style={{ width: `${pct}%` }} />
             </div>
             <p className="text-[10px] text-muted-foreground text-right">{value} votes</p>
         </div>
@@ -600,7 +596,7 @@ function DetailBox({ title, value, isCode }) {
     return (
         <div className="space-y-1.5">
             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{title}</p>
-            <div className={cn("p-3 rounded-xl border border-border text-xs leading-relaxed", isCode ? "bg-[#0a0c14] font-mono text-primary/80" : "bg-muted/50 font-medium")}>
+            <div className={cn("p-3 rounded-lg border border-border text-xs leading-relaxed", isCode ? "bg-[#0a0c14] font-mono text-primary/80" : "bg-muted/50 font-medium")}>
                 {value}
             </div>
         </div>

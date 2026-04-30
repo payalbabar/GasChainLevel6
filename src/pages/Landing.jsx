@@ -1,193 +1,186 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import {
-  Zap, ArrowRight, ChevronRight, CheckCircle2
-} from "lucide-react";
-import { GasChainMark } from "@/components/Layout";
-import { toast } from "@/hooks/use-toast";
-import { useAuth } from "@/lib/AuthContext";
-import { checkConnection, retrievePublicKey } from "@/lib/freighter";
+import React from "react";
 import { motion } from "framer-motion";
+import { 
+  Shield, Zap, Globe, ArrowRight, 
+  Layers, Lock, Database, Code2
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const { login, logout, isAuthenticated } = useAuth();
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [publicKey, setPublicKey] = useState("");
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) setIsWalletConnected(true);
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const connectWallet = async () => {
-    try {
-      setIsConnecting(true);
-      toast({ title: "Connecting Freighter...", description: "Requesting wallet permissions" });
-      const allowed = await checkConnection();
-      if (!allowed) {
-        if (import.meta.env.DEV) {
-           toast({ title: "Demo Mode", description: "Freighter not found. Entering as guest." });
-           login();
-           return;
-        }
-        toast({ title: "Freighter Not Found", description: "Please install Freighter browser extension to continue", variant: "destructive" });
-        return;
-      }
-      const key = await retrievePublicKey();
-      setPublicKey(key);
-      setIsWalletConnected(true);
-      login();
-      toast({ title: "✓ Wallet Connected", description: `Connected: ${key.slice(0, 6)}...${key.slice(-4)}` });
-    } catch (err) {
-      console.error(err);
-      toast({ title: "Connection Failed", description: err.message || "User rejected the request", variant: "destructive" });
-    } finally {
-      setIsConnecting(false);
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-white selection:bg-cyan-500/30 selection:text-cyan-400 font-sans">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary overflow-x-hidden font-sans">
       
-      {/* --- Header --- */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#02040a]/80 backdrop-blur-xl border-b border-white/5 py-4" : "bg-transparent py-6"}`}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo & Version */}
-          <div className="flex items-center gap-3">
-            <GasChainMark size={28} />
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold tracking-tight">GasChain</span>
-              <span className="text-[10px] text-white/40 font-mono">v2.4</span>
+      {/* ── Navigation ── */}
+      <nav className="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-border px-6 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => navigate("/")}>
+            <div className="h-7 w-7 bg-primary rounded flex items-center justify-center">
+              <Layers className="text-white h-4.5 w-4.5" />
             </div>
+            <span className="text-lg font-bold tracking-tighter text-white uppercase">GasChain</span>
           </div>
-
-          {/* Network Status */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">Stellar Mainnet</span>
+          <div className="hidden md:flex items-center gap-8">
+            {['Protocol', 'Solutions', 'Security', 'Developers'].map(item => (
+              <a key={item} href="#" className="text-[13px] font-medium text-muted-foreground hover:text-white transition-colors">{item}</a>
+            ))}
           </div>
-
-          {/* Nav Actions */}
-          <div className="flex items-center gap-8">
-            <button 
-              onClick={connectWallet}
-              className="hidden md:block text-sm font-medium text-white/60 hover:text-white transition-colors"
-            >
-              Connect Wallet
-            </button>
-            <Button 
-              onClick={() => navigate("/dashboard")}
-              className="h-10 px-6 rounded-full bg-cyan-500 text-black hover:bg-cyan-400 font-bold transition-all flex items-center gap-2 group"
-            >
-              Launch App
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-            </Button>
-          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" className="text-xs font-semibold hover:bg-secondary" onClick={() => navigate("/dashboard")}>Sign in</Button>
+          <Button size="sm" onClick={() => navigate("/dashboard")} className="bg-primary text-primary-foreground font-bold text-xs rounded-md px-5 h-9">Get Started</Button>
         </div>
       </nav>
 
-      {/* --- Main Content --- */}
-      <main className="relative pt-48 pb-32 overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-cyan-500/10 blur-[120px] -z-10 rounded-full" />
-        <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-blue-500/5 blur-[100px] -z-10 rounded-full" />
-        
-        <div className="max-w-5xl mx-auto px-6 text-center">
+      {/* ── Hero Section ── */}
+      <main className="pt-32 pb-20 px-6">
+        <div className="max-w-6xl mx-auto text-center space-y-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
+            transition={{ duration: 0.8 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold tracking-widest uppercase"
           >
-            {/* Announcement Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[11px] font-bold tracking-wide">
-              <Zap className="h-3 w-3 fill-cyan-400" />
-              Introducing Protocol v2.4
-            </div>
+            <Zap className="h-3 w-3 fill-primary" />
+            V2.4 Protocol Status: Stable
+          </motion.div>
 
-            {/* Headline */}
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-[1.1] text-white">
-              Energy logistics,
-              <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500">
-                cryptographically verified.
-              </span>
-            </h1>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] text-white"
+          >
+            Energy logistics, <br />
+            <span className="text-muted-foreground">reimagined.</span>
+          </motion.h1>
 
-            {/* Description */}
-            <p className="text-lg md:text-xl text-white/50 max-w-3xl mx-auto leading-relaxed">
-              GasChain is the operating system for global LPG distribution. Track physical assets, 
-              automate compliance, and settle payments in milliseconds — on Stellar.
-            </p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium"
+          >
+            The enterprise operating system for global LPG distribution. 
+            Cryptographically verified, instantly settled, globally compliant.
+          </motion.p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button 
-                onClick={() => navigate("/dashboard")}
-                className="h-14 px-10 rounded-full bg-cyan-500 text-black hover:bg-cyan-400 font-bold text-lg transition-all flex items-center gap-2 group shadow-[0_0_30px_rgba(6,182,212,0.3)]"
-              >
-                Start Building
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                onClick={connectWallet}
-                variant="outline"
-                className="h-14 px-10 rounded-full border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold text-lg transition-all"
-              >
-                Connect Wallet
-              </Button>
-            </div>
-
-            {/* Features List */}
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 pt-12">
-              {[
-                "Stellar Soroban",
-                "Zero-Knowledge Proofs",
-                "Sub-second finality"
-              ].map(item => (
-                <div key={item} className="flex items-center gap-2 text-white/40 text-xs font-bold tracking-wider uppercase">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500/60" />
-                  {item}
-                </div>
-              ))}
-            </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+          >
+            <Button 
+              size="lg" 
+              onClick={() => navigate("/dashboard")}
+              className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md group"
+            >
+              Launch Dashboard <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={() => alert("Documentation portal is being synchronized with the network protocol. Please check back shortly.")}
+              className="h-12 px-8 rounded-md border-border hover:bg-secondary font-semibold transition-colors duration-150"
+            >
+              Documentation
+            </Button>
           </motion.div>
         </div>
       </main>
 
-      {/* --- Footer Status --- */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <div className="p-4 rounded-3xl bg-[#0a0c14]/90 backdrop-blur-2xl border border-white/5 shadow-2xl flex items-center gap-6">
-          <div className="flex items-center gap-4">
-            <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group cursor-pointer hover:bg-white/10 transition-colors">
-              <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-white" />
-            </div>
-            <div>
-              <div className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 leading-none mb-1">Automated Indexer</div>
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="text-xs font-bold uppercase tracking-widest text-white/60">Node Idle</span>
-              </div>
-            </div>
-          </div>
-          <Button 
-            variant="outline"
-            className="h-10 px-6 rounded-full border-cyan-500/30 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-black font-bold text-xs uppercase tracking-widest transition-all"
-          >
-            Spin up Node
-          </Button>
+      {/* ── Feature Grid ── */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <div className="grid md:grid-cols-3 gap-px bg-border border border-border rounded-lg overflow-hidden">
+          <FeatureCard 
+            icon={Lock} 
+            title="Sovereign Identity" 
+            desc="Physical assets linked to unique cryptographic identities on the network ledger." 
+          />
+          <FeatureCard 
+            icon={Database} 
+            title="Real-time Ledger" 
+            desc="Instant settlement with zero reconciliation overhead. Audit ready by default." 
+          />
+          <FeatureCard 
+            icon={Globe} 
+            title="Global Compliance" 
+            desc="Automated reporting and multi-region tax settlement built into the protocol." 
+          />
         </div>
-      </div>
+      </section>
 
+      {/* ── Architecture ── */}
+      <section className="max-w-4xl mx-auto px-6 py-20 text-center space-y-12">
+        <div className="space-y-4">
+          <p className="text-[10px] font-bold text-primary uppercase tracking-[0.3em]">Protocol Layer</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">Built for the future.</h2>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+          <TechItem icon={Code2} label="SOROBAN" />
+          <TechItem icon={Layers} label="CAP-0015" />
+          <Shield size={32} className="mx-auto" />
+          <Zap size={32} className="mx-auto" />
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-border py-20 px-6 bg-card">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+          <div className="space-y-4 max-w-xs">
+            <div className="flex items-center gap-2">
+              <Layers className="text-primary h-5 w-5" />
+              <span className="text-xl font-bold tracking-tighter text-white uppercase">GasChain</span>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Standardizing the global energy grid through decentralized protocol logic.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-16">
+            <FooterCol title="Protocol" links={['Mainnet', 'Nodes', 'Governance']} />
+            <FooterCol title="Resources" links={['Docs', 'API', 'Audit']} />
+            <FooterCol title="Company" links={['About', 'Privacy', 'Terms']} />
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function FeatureCard({ icon: Icon, title, desc }) {
+  return (
+    <div className="bg-card p-10 space-y-4 hover:bg-secondary/20 transition-colors group">
+      <div className="h-10 w-10 bg-primary/10 rounded flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+        <Icon size={20} />
+      </div>
+      <h3 className="text-lg font-semibold text-white tracking-tight">{title}</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function TechItem({ icon: Icon, label }) {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <Icon size={32} className="mx-auto" />
+      <span className="text-[10px] font-bold tracking-widest uppercase">{label}</span>
+    </div>
+  );
+}
+
+function FooterCol({ title, links }) {
+  return (
+    <div className="space-y-4">
+      <h4 className="text-[11px] font-bold text-white uppercase tracking-widest">{title}</h4>
+      <ul className="space-y-2">
+        {links.map(link => (
+          <li key={link}><a href="#" className="text-sm text-muted-foreground hover:text-white transition-colors">{link}</a></li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -16,37 +16,37 @@ import BlockchainSimulator from './components/BlockchainSimulator';
 import Landing from './pages/Landing';
 import MetricsDashboard from './pages/MetricsDashboard';
 
+import Deliveries from './pages/Deliveries';
+import Customers from './pages/Customers';
+import Settings from './pages/Settings';
+
+import { LayoutDashboard } from "lucide-react";
+
 const AuthenticatedApp = () => {
   const { isAuthenticated, isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
   const location = useLocation();
 
-  // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
       navigateToLogin();
       return null;
     }
   }
 
-  // If not authenticated and trying to access a protected route, redirect to home
-  // Note: '/' and '*' are allowed
   if (!isAuthenticated && location.pathname !== '/' && location.pathname !== '/login') {
     return <Navigate to="/" replace />;
   }
 
-  // Render the main app
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
@@ -55,9 +55,12 @@ const AuthenticatedApp = () => {
         <Route path="/book" element={<BookCylinder />} />
         <Route path="/bookings" element={<MyBookings />} />
         <Route path="/supply-chain" element={<SupplyChain />} />
+        <Route path="/deliveries" element={<Deliveries />} />
+        <Route path="/customers" element={<Customers />} />
         <Route path="/subsidies" element={<Subsidies />} />
         <Route path="/dashboard/metrics" element={<MetricsDashboard />} />
         <Route path="/ledger" element={<BlockchainLedger />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
@@ -66,7 +69,6 @@ const AuthenticatedApp = () => {
 
 
 function App() {
-
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
@@ -79,6 +81,5 @@ function App() {
     </Router>
   )
 }
-
 
 export default App

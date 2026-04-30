@@ -63,10 +63,9 @@ export default function BlockchainLedger() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <AppHeader breadcrumb="Explorer" />
       <div className="p-8 space-y-8 pb-16 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-4">
           <div className="space-y-1.5">
             <h1 className="text-3xl font-semibold tracking-tight">Block Explorer</h1>
             <p className="text-sm text-muted-foreground">Real-time cryptographic audit log of the LPG supply network.</p>
@@ -100,7 +99,7 @@ export default function BlockchainLedger() {
 
         {/* Filter Panel */}
         {activeFilter && (
-          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="rounded-lg border border-border bg-card p-6">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-base font-semibold text-foreground">
                 {activeFilter === "total" && "Event Distribution"}
@@ -185,7 +184,7 @@ export default function BlockchainLedger() {
             <p className="text-xs text-muted-foreground">{filtered.length} events</p>
           </div>
           
-          <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+          <div className="rounded-lg border border-border bg-card overflow-hidden">
             {filtered.map((block) => {
               const isExpanded = expandedBlock === block.id;
               let eventData = null;
@@ -196,7 +195,7 @@ export default function BlockchainLedger() {
               return (
                 <div key={block.id} className="border-b border-border last:border-0">
                   <div
-                    className="p-4 cursor-pointer flex items-center justify-between hover:bg-muted/50 transition-colors"
+                    className="px-4 py-2.5 cursor-pointer flex items-center justify-between hover:bg-muted/50 transition-colors"
                     onClick={() => setExpandedBlock(isExpanded ? null : block.id)}
                   >
                     <div className="flex items-center gap-4">
@@ -208,7 +207,7 @@ export default function BlockchainLedger() {
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold font-mono">Block #{block.block_index}</span>
-                          <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase bg-primary/10 text-primary">
+                          <span className="text-[10px] px-2 py-0.5 rounded-md font-medium uppercase bg-primary/10 text-primary">
                             {EVENT_LABELS[block.event_type] || block.event_type?.replace(/_/g, " ")}
                           </span>
                         </div>
@@ -218,7 +217,7 @@ export default function BlockchainLedger() {
 
                     <div className="flex items-center gap-6">
                       <div className="flex items-center gap-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-success"></span>
+                        <span className="h-1.5 w-1.5 rounded-md bg-success"></span>
                         <span className="text-xs text-success font-medium">Committed</span>
                       </div>
                       <p className="text-xs text-muted-foreground hidden sm:block">{moment(block.created_date).format("DD MMM, HH:mm")}</p>
@@ -227,7 +226,7 @@ export default function BlockchainLedger() {
                   </div>
 
                   {isExpanded && (
-                    <div className="px-6 pb-6 pt-2 bg-muted/30 border-t border-border">
+                    <div className="px-6 pb-4 pt-2 bg-muted/30 border-t border-border">
                       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                         <DetailItem label="Event Hash" value={block.block_hash} mono />
                         <DetailItem label="Previous Hash" value={block.previous_hash} mono />
@@ -262,7 +261,7 @@ function StatPanel({ label, value, icon: Icon, active, onClick }) {
     <div 
       onClick={onClick}
       className={cn(
-        "p-6 rounded-xl border cursor-pointer transition-colors",
+        "p-6 rounded-lg border cursor-pointer transition-colors",
         active ? "bg-primary/10 border-primary" : "bg-card border-border hover:border-primary/50"
       )}
     >
@@ -271,7 +270,7 @@ function StatPanel({ label, value, icon: Icon, active, onClick }) {
           <p className="text-sm font-medium text-muted-foreground">{label}</p>
           <p className="text-2xl font-semibold text-foreground mt-1">{value}</p>
         </div>
-        <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center",
+        <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center",
           active ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
         )}>
           <Icon className="h-5 w-5" />
